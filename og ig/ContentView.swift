@@ -6,19 +6,25 @@
 //
 
 import SwiftUI
+import WebKit
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+struct WebView: UIViewRepresentable {
+    let url: URL
+
+    func makeUIView(context: Context) -> WKWebView {
+        let wv = WKWebView()
+        wv.isInspectable = true
+        return wv
+    }
+
+    func updateUIView(_ wv: WKWebView, context: Context) {
+        wv.load(URLRequest(url: url))
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView: View {
+    var body: some View {
+        WebView(url: URL(string: "https://www.instagram.com")!)
+            .ignoresSafeArea(edges: .bottom)
+    }
 }
