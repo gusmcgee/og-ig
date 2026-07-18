@@ -35,13 +35,8 @@ struct AppView: UIViewRepresentable {
         webView.isInspectable = true
         
         webView.scrollView.bounces = true
-        webView.scrollView.alwaysBounceVertical = true
-        webView.scrollView.alwaysBounceHorizontal = false
-        
-//        webView.isOpaque = false                  // stop the white flash before paint
-//        webView.backgroundColor = .black
-//        webView.scrollView.showsVerticalScrollIndicator = false
-        webView.allowsBackForwardNavigationGestures = true   // edge-swipe back
+        webView.scrollView.showsVerticalScrollIndicator = false
+        webView.allowsBackForwardNavigationGestures = true
         webView.allowsLinkPreview = false
         
         return webView
@@ -50,10 +45,24 @@ struct AppView: UIViewRepresentable {
     func updateUIView(_ webView: WKWebView, context: Context) {}
 }
 
+struct StatsView: View {
+    var body: some View {
+        Color.red
+    }
+}
+
 struct ContentView: View {
     private let url = URL(string: "https://www.instagram.com")!
 
     var body: some View {
         AppView(url: url)
+            .safeAreaInset(edge: .bottom) {
+                StatsView()
+                    .frame(height: 8)
+            }
     }
 }
+
+
+// compare playback to native ig webiste in safari/google app
+// audio keep playback after closing
